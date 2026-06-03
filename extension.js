@@ -12,18 +12,19 @@ export default class VolumePercentageExtension extends Extension {
         this._mixer.connect('default-sink-changed', this._onSinkChanged.bind(this));
         this._mixer.open();
 
-        // Add self after battery percentage, the first item in the quick settings menu header
         this._idleId = GLib.idle_add(GLib.PRIORITY_DEFAULT_IDLE, () => {
             this._label = new St.Label({
                 text: '--%',
                 y_align: Clutter.ActorAlign.CENTER,
-                style: 'margin: 0 6px;',
+                style: 'min-width: 3em; text-align: right;',
             });
 
-            const menu = Main.panel.statusArea.quickSettings.menu;
-            const systemItem = menu._grid.get_first_child();
-            const header = systemItem.get_first_child();
-            header.insert_child_at_index(this._label, 1);
+            const quickSettingsMenu = Main.panel.statusArea.quickSettings.menu;
+
+            const sliderRow = quickSettingsMenu._grid.get_children()[1].get_first_child();
+            // [mute button] [slider] [<our inserted label>] [settings button]
+            sliderRow.insert_child_at_index(this._label, 2);
+
             this._update();
 
             this._idleId = 0;
