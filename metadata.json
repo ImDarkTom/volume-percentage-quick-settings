@@ -1,0 +1,7 @@
+{
+    "name": "Volume Percentage in Quick Settings",
+    "description": "Displays the current volume percentage in the quick settings menu.",
+    "uuid": "volume-percentage-quick-settings@imdarktom",
+    "shell-version": [ "50" ],
+    "version": 1
+}
