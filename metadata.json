@@ -3,5 +3,8 @@
     "name": "Volume Percentage in Quick Settings",
     "description": "Displays the current volume percentage in the quick settings menu.",
     "shell-version": [ "50" ],
-    "url": "https://github.com/ImDarkTom/volume-percentage-quick-settings"
+    "url": "https://github.com/ImDarkTom/volume-percentage-quick-settings",
+    "donations": {
+        "github": "imdarktom"
+    }
 }
