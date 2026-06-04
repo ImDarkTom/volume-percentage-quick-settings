@@ -2,8 +2,6 @@
 
 Displays the current volume percentage beside the volume slider in the quick settings menu.
 
-(Not yet available on extensions.gnome.org)
-
 ## Screenshots
 
 <img width="250" height="auto" alt="Dark mode preview" src="https://github.com/user-attachments/assets/07590f28-837d-4520-b807-820dbc4ca81a" />
