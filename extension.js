@@ -60,7 +60,7 @@ export default class VolumePercentageExtension extends Extension {
     disable() {
         if (this._idleId) {
             GLib.source_remove(this._idleId);
-        };
+        }
 
         this._idleId = 0;
 
