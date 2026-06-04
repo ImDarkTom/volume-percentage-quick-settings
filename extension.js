@@ -8,8 +8,9 @@ import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
 export default class VolumePercentageExtension extends Extension {
     enable() {
+        // Connect to mixer to track sink changes
         this._mixer = new Gvc.MixerControl({ name: this.uuid });
-        this._mixer.connect('default-sink-changed', this._onSinkChanged.bind(this));
+        this._mixer.connectObject('default-sink-changed', (mixer) => this._onSinkChanged(mixer), this);
         this._mixer.open();
 
         this._idleId = GLib.idle_add(GLib.PRIORITY_DEFAULT_IDLE, () => {
@@ -33,20 +34,17 @@ export default class VolumePercentageExtension extends Extension {
     }
 
     _onSinkChanged(mixer) {
-        // Remove old sinks
-        if (this._volumeId) {
-            this._sink?.disconnect(this._volumeId);
-        }
-
-        if (this._mutedId) {
-            this._sink?.disconnect(this._mutedId);
-        }
+        this._sink?.disconnectObject(this);
 
         this._sink = mixer.get_default_sink();
         if (!this._sink) return;
 
-        this._volumeId = this._sink.connect('notify::volume', () => this._update());
-        this._mutedId = this._sink.connect('notify::is-muted', () => this._update());
+        this._sink.connectObject(
+            'notify::volume', () => this._update(),
+            'notify::is-muted', () => this._update(),
+            this
+        );
+
         this._update();
     }
 
@@ -60,16 +58,13 @@ export default class VolumePercentageExtension extends Extension {
     disable() {
         if (this._idleId) {
             GLib.source_remove(this._idleId);
-        }
-
-        this._idleId = 0;
-
-        if (this._sink) {
-            if (this._volumeId) this._sink.disconnect(this._volumeId);
-            if (this._mutedId) this._sink.disconnect(this._mutedId);
+            this._idleId = 0;
         }
         
+        this._sink?.disconnectObject(this);
         this._sink = null;
+
+        this._mixer?.disconnectObject(this);
         this._mixer?.close();
         this._mixer = null;
 
