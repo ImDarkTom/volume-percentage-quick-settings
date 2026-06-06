@@ -32,11 +32,13 @@ make test-shell
 
 ## Version Support
 
-The supported GNOME versions are:
+The following GNOME versions have been tested and are supported:
 
+* 46
+* 47
+* 48
+* 49
 * 50
-
-Older versions down to 45 may work but have not been tested.
 
 ## License
 
