@@ -1,3 +1,6 @@
+> [!WARNING]
+> This extension is no longer being maintained. Use the new version, [Slider Percentages](https://github.com/ImDarkTom/slider-percentages-gnome).
+
 # GNOME Extension - Volume Percentage in Quick Settings
 
 Displays the current volume percentage beside the volume slider in the quick settings menu.
